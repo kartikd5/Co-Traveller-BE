@@ -1,0 +1,180 @@
+import { Document, Types } from 'mongoose';
+export type TravelPostDocument = TravelPost & Document;
+export declare class TravelPost {
+    userId: Types.ObjectId;
+    fromLocation: string;
+    toLocation: string;
+    country: string;
+    city: string;
+    area?: string;
+    geo?: {
+        type: string;
+        coordinates: number[];
+    };
+    transportPreference: string;
+    preferredGender?: string;
+    fromDate: Date;
+    timeRangeStart?: string;
+    timeRangeEnd?: string;
+    interests: string[];
+    reason: string;
+    expiresAt: Date;
+}
+export declare const TravelPostSchema: import("mongoose").Schema<TravelPost, import("mongoose").Model<TravelPost, any, any, any, (Document<unknown, any, TravelPost, any, import("mongoose").DefaultSchemaOptions> & TravelPost & {
+    _id: Types.ObjectId;
+} & {
+    __v: number;
+} & {
+    id: string;
+}) | (Document<unknown, any, TravelPost, any, import("mongoose").DefaultSchemaOptions> & TravelPost & {
+    _id: Types.ObjectId;
+} & {
+    __v: number;
+}), any, TravelPost>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, TravelPost, Document<unknown, {}, TravelPost, {
+    id: string;
+}, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+    _id: Types.ObjectId;
+} & {
+    __v: number;
+}, "id"> & {
+    id: string;
+}, {
+    userId?: import("mongoose").SchemaDefinitionProperty<Types.ObjectId, TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    fromLocation?: import("mongoose").SchemaDefinitionProperty<string, TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    toLocation?: import("mongoose").SchemaDefinitionProperty<string, TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    country?: import("mongoose").SchemaDefinitionProperty<string, TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    city?: import("mongoose").SchemaDefinitionProperty<string, TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    area?: import("mongoose").SchemaDefinitionProperty<string | undefined, TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    geo?: import("mongoose").SchemaDefinitionProperty<{
+        type: string;
+        coordinates: number[];
+    } | undefined, TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    transportPreference?: import("mongoose").SchemaDefinitionProperty<string, TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    preferredGender?: import("mongoose").SchemaDefinitionProperty<string | undefined, TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    fromDate?: import("mongoose").SchemaDefinitionProperty<Date, TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    timeRangeStart?: import("mongoose").SchemaDefinitionProperty<string | undefined, TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    timeRangeEnd?: import("mongoose").SchemaDefinitionProperty<string | undefined, TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    interests?: import("mongoose").SchemaDefinitionProperty<string[], TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    reason?: import("mongoose").SchemaDefinitionProperty<string, TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    expiresAt?: import("mongoose").SchemaDefinitionProperty<Date, TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+}, TravelPost>;
