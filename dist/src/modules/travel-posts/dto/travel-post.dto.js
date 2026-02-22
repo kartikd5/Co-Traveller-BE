@@ -13,16 +13,19 @@ exports.CreateTravelPostDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateTravelPostDto {
-    fromLocation;
-    toLocation;
-    country;
-    city;
-    area;
-    longitude;
-    latitude;
+    fromCountry;
+    fromCity;
+    fromArea;
+    fromLongitude;
+    fromLatitude;
+    toCountry;
+    toCity;
+    toArea;
+    toLongitude;
+    toLatitude;
     transportPreference;
     preferredGender;
-    fromDate;
+    travelDate;
     timeRangeStart;
     timeRangeEnd;
     interests;
@@ -34,43 +37,61 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateTravelPostDto.prototype, "fromLocation", void 0);
+], CreateTravelPostDto.prototype, "fromCountry", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateTravelPostDto.prototype, "toLocation", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], CreateTravelPostDto.prototype, "country", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], CreateTravelPostDto.prototype, "city", void 0);
+], CreateTravelPostDto.prototype, "fromCity", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateTravelPostDto.prototype, "area", void 0);
+], CreateTravelPostDto.prototype, "fromArea", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ description: 'Longitude' }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
-], CreateTravelPostDto.prototype, "longitude", void 0);
+], CreateTravelPostDto.prototype, "fromLongitude", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ description: 'Latitude' }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
-], CreateTravelPostDto.prototype, "latitude", void 0);
+], CreateTravelPostDto.prototype, "fromLatitude", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateTravelPostDto.prototype, "toCountry", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateTravelPostDto.prototype, "toCity", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateTravelPostDto.prototype, "toArea", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Longitude' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], CreateTravelPostDto.prototype, "toLongitude", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({ description: 'Latitude' }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], CreateTravelPostDto.prototype, "toLatitude", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ enum: ['car', 'bus', 'train', 'flight'] }),
     (0, class_validator_1.IsEnum)(['car', 'bus', 'train', 'flight']),
@@ -88,7 +109,7 @@ __decorate([
     (0, class_validator_1.IsDateString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], CreateTravelPostDto.prototype, "fromDate", void 0);
+], CreateTravelPostDto.prototype, "travelDate", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ description: 'Time in HH:mm format' }),
     (0, class_validator_1.IsOptional)(),

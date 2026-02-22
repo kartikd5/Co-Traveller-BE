@@ -3,6 +3,7 @@ import { CreateTravelPostDto } from './dto/travel-post.dto';
 import { TravelPost, TravelPostDocument } from './schemas/travel-post.schema';
 export declare class TravelPostsService {
     private travelPostModel;
+    private readonly logger;
     constructor(travelPostModel: Model<TravelPostDocument>);
     create(userId: string, createDto: CreateTravelPostDto): Promise<TravelPost>;
     findAllPublic(query: any): Promise<TravelPost[]>;

@@ -1,22 +1,44 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsDateString, IsEnum, IsNumber, IsOptional, IsString, Min } from 'class-validator';
+import {
+    IsDateString,
+    IsEnum,
+    IsNumber,
+    IsOptional,
+    IsString,
+    Min,
+} from 'class-validator';
 
 export class SearchQueryDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  country?: string;
+  fromCountry?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  city?: string;
+  fromCity?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  area?: string;
+  fromArea?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  toCountry?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  toCity?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  toArea?: string;
 
   @ApiPropertyOptional({ description: 'Filter by specific date' })
   @IsOptional()

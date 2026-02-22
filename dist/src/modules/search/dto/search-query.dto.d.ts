@@ -1,7 +1,10 @@
 export declare class SearchQueryDto {
-    country?: string;
-    city?: string;
-    area?: string;
+    fromCountry?: string;
+    fromCity?: string;
+    fromArea?: string;
+    toCountry?: string;
+    toCity?: string;
+    toArea?: string;
     date?: string;
     transportPreference?: string;
     gender?: string;

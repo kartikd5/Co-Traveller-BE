@@ -16,9 +16,12 @@ export class SearchService {
 
   async searchPosts(queryDto: SearchQueryDto) {
     const {
-      country,
-      city,
-      area,
+      fromCountry,
+      fromCity,
+      fromArea,
+      toCountry,
+      toCity,
+      toArea,
       date,
       transportPreference,
       gender,
@@ -31,9 +34,12 @@ export class SearchService {
       expiresAt: { $gt: new Date() }, // Only active posts
     };
 
-    if (country) filter.country = new RegExp(country, 'i');
-    if (city) filter.city = new RegExp(city, 'i');
-    if (area) filter.area = new RegExp(area, 'i');
+    if (fromCountry) filter.fromCountry = new RegExp(fromCountry, 'i');
+    if (fromCity) filter.fromCity = new RegExp(fromCity, 'i');
+    if (fromArea) filter.fromArea = new RegExp(fromArea, 'i');
+    if (toCountry) filter.toCountry = new RegExp(toCountry, 'i');
+    if (toCity) filter.toCity = new RegExp(toCity, 'i');
+    if (toArea) filter.toArea = new RegExp(toArea, 'i');
     if (transportPreference) filter.transportPreference = transportPreference;
     if (gender) filter.preferredGender = gender;
 
@@ -42,7 +48,7 @@ export class SearchService {
       const searchDate = new Date(date);
       const startOfDay = new Date(searchDate.setHours(0, 0, 0, 0));
       const endOfDay = new Date(searchDate.setHours(23, 59, 59, 999));
-      filter.fromDate = { $gte: startOfDay, $lte: endOfDay };
+      filter.travelDate = { $gte: startOfDay, $lte: endOfDay };
     }
 
     const parsedPage = page || 1;

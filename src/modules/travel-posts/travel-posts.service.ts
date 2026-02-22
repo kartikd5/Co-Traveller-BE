@@ -1,4 +1,9 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+    ForbiddenException,
+    Injectable,
+    Logger,
+    NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CreateTravelPostDto } from './dto/travel-post.dto';
@@ -6,22 +11,44 @@ import { TravelPost, TravelPostDocument } from './schemas/travel-post.schema';
 
 @Injectable()
 export class TravelPostsService {
+  private readonly logger = new Logger(TravelPostsService.name);
+
   constructor(
-    @InjectModel(TravelPost.name) private travelPostModel: Model<TravelPostDocument>
+    @InjectModel(TravelPost.name)
+    private travelPostModel: Model<TravelPostDocument>,
   ) {}
 
-  async create(userId: string, createDto: CreateTravelPostDto): Promise<TravelPost> {
-    const { longitude, latitude, ...rest } = createDto;
-    const postData: any = { ...rest, userId: new Types.ObjectId(userId) };
+  async create(
+    userId: string,
+    createDto: CreateTravelPostDto,
+  ): Promise<TravelPost> {
+    try {
+      const { fromLongitude, fromLatitude, toLongitude, toLatitude, ...rest } =
+        createDto;
+      const postData: any = { ...rest, userId: new Types.ObjectId(userId) };
 
-    if (longitude !== undefined && latitude !== undefined) {
-      postData.geo = {
-        type: 'Point',
-        coordinates: [longitude, latitude]
-      };
+      if (fromLongitude !== undefined && fromLatitude !== undefined) {
+        postData.fromGeo = {
+          type: 'Point',
+          coordinates: [fromLongitude, fromLatitude],
+        };
+      }
+
+      if (toLongitude !== undefined && toLatitude !== undefined) {
+        postData.toGeo = {
+          type: 'Point',
+          coordinates: [toLongitude, toLatitude],
+        };
+      }
+
+      return await this.travelPostModel.create(postData);
+    } catch (error) {
+      this.logger.error(
+        `Error creating travel post for user: ${userId}. Details: ${error.message}`,
+        error.stack,
+      );
+      throw error;
     }
-
-    return this.travelPostModel.create(postData);
   }
 
   async findAllPublic(query: any): Promise<TravelPost[]> {
@@ -29,7 +56,7 @@ export class TravelPostsService {
     return this.travelPostModel
       .find({
         ...query,
-        expiresAt: { $gt: new Date() } 
+        expiresAt: { $gt: new Date() },
       })
       .populate('userId', 'name profileImage age gender whatsappEnabled')
       .lean()
@@ -57,7 +84,7 @@ export class TravelPostsService {
   async delete(id: string, userId: string): Promise<{ message: string }> {
     const post = await this.travelPostModel.findById(id).exec();
     if (!post) throw new NotFoundException('Travel post not found');
-    
+
     if (post.userId.toString() !== userId) {
       throw new ForbiddenException('You can only delete your own posts');
     }

@@ -9,34 +9,34 @@ export class TravelPost {
   userId: Types.ObjectId;
 
   @Prop({ required: true })
-  fromLocation: string;
+  fromCountry: string;
 
   @Prop({ required: true })
-  toLocation: string;
-
-  @Prop({ required: true })
-  country: string;
-
-  @Prop({ required: true })
-  city: string;
+  fromCity: string;
 
   @Prop()
-  area?: string;
+  fromArea?: string;
 
   @Prop({
-    type: {
-      type: String,
-      enum: ['Point'],
-      default: 'Point',
-    },
-    coordinates: {
-      type: [Number], // [longitude, latitude]
-    },
+    type: { type: String, enum: ['Point'] },
+    coordinates: { type: [Number] },
   })
-  geo?: {
-    type: string;
-    coordinates: number[];
-  };
+  fromGeo?: { type: string; coordinates: number[] };
+
+  @Prop({ required: true })
+  toCountry: string;
+
+  @Prop({ required: true })
+  toCity: string;
+
+  @Prop()
+  toArea?: string;
+
+  @Prop({
+    type: { type: String, enum: ['Point'] },
+    coordinates: { type: [Number] },
+  })
+  toGeo?: { type: string; coordinates: number[] };
 
   @Prop({ required: true, enum: ['car', 'bus', 'train', 'flight'] })
   transportPreference: string;
@@ -45,7 +45,7 @@ export class TravelPost {
   preferredGender?: string;
 
   @Prop({ required: true })
-  fromDate: Date;
+  travelDate: Date;
 
   @Prop()
   timeRangeStart?: string;
@@ -66,24 +66,24 @@ export class TravelPost {
 export const TravelPostSchema = SchemaFactory.createForClass(TravelPost);
 
 // Required Indexes
-TravelPostSchema.index({ toLocation: 1 });
-TravelPostSchema.index({ country: 1 });
-TravelPostSchema.index({ city: 1 });
-TravelPostSchema.index({ fromDate: 1 });
+TravelPostSchema.index({ fromCountry: 1 });
+TravelPostSchema.index({ fromCity: 1 });
+TravelPostSchema.index({ toCountry: 1 });
+TravelPostSchema.index({ toCity: 1 });
+TravelPostSchema.index({ travelDate: 1 });
 TravelPostSchema.index({ transportPreference: 1 });
 TravelPostSchema.index({ preferredGender: 1 });
 // Compound index
-TravelPostSchema.index({ city: 1, fromDate: 1 });
+TravelPostSchema.index({ fromCity: 1, toCity: 1, travelDate: 1 });
 // TTL index for auto-deletion
 TravelPostSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
-// Pre save hook to ensure expiresAt is correctly set (e.g. End of 'fromDate')
-TravelPostSchema.pre('save', function (next: any) {
-  if (this.isModified('fromDate') || this.isNew) {
+// Pre save hook to ensure expiresAt is correctly set (e.g. End of 'travelDate') before validation
+TravelPostSchema.pre('validate', function () {
+  if (this.isModified('travelDate') || this.isNew) {
     // Set expiry to 24 hours after the travel date starts
-    const expiry = new Date(this.fromDate);
+    const expiry = new Date(this.travelDate);
     expiry.setHours(expiry.getHours() + 24);
     this.expiresAt = expiry;
   }
-  next();
 });

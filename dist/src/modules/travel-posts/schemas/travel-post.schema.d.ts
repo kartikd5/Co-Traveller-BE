@@ -2,18 +2,23 @@ import { Document, Types } from 'mongoose';
 export type TravelPostDocument = TravelPost & Document;
 export declare class TravelPost {
     userId: Types.ObjectId;
-    fromLocation: string;
-    toLocation: string;
-    country: string;
-    city: string;
-    area?: string;
-    geo?: {
+    fromCountry: string;
+    fromCity: string;
+    fromArea?: string;
+    fromGeo?: {
+        type: string;
+        coordinates: number[];
+    };
+    toCountry: string;
+    toCity: string;
+    toArea?: string;
+    toGeo?: {
         type: string;
         coordinates: number[];
     };
     transportPreference: string;
     preferredGender?: string;
-    fromDate: Date;
+    travelDate: Date;
     timeRangeStart?: string;
     timeRangeEnd?: string;
     interests: string[];
@@ -48,7 +53,7 @@ export declare const TravelPostSchema: import("mongoose").Schema<TravelPost, imp
     }, "id"> & {
         id: string;
     }> | undefined;
-    fromLocation?: import("mongoose").SchemaDefinitionProperty<string, TravelPost, Document<unknown, {}, TravelPost, {
+    fromCountry?: import("mongoose").SchemaDefinitionProperty<string, TravelPost, Document<unknown, {}, TravelPost, {
         id: string;
     }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
         _id: Types.ObjectId;
@@ -57,7 +62,7 @@ export declare const TravelPostSchema: import("mongoose").Schema<TravelPost, imp
     }, "id"> & {
         id: string;
     }> | undefined;
-    toLocation?: import("mongoose").SchemaDefinitionProperty<string, TravelPost, Document<unknown, {}, TravelPost, {
+    fromCity?: import("mongoose").SchemaDefinitionProperty<string, TravelPost, Document<unknown, {}, TravelPost, {
         id: string;
     }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
         _id: Types.ObjectId;
@@ -66,7 +71,7 @@ export declare const TravelPostSchema: import("mongoose").Schema<TravelPost, imp
     }, "id"> & {
         id: string;
     }> | undefined;
-    country?: import("mongoose").SchemaDefinitionProperty<string, TravelPost, Document<unknown, {}, TravelPost, {
+    fromArea?: import("mongoose").SchemaDefinitionProperty<string | undefined, TravelPost, Document<unknown, {}, TravelPost, {
         id: string;
     }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
         _id: Types.ObjectId;
@@ -75,7 +80,10 @@ export declare const TravelPostSchema: import("mongoose").Schema<TravelPost, imp
     }, "id"> & {
         id: string;
     }> | undefined;
-    city?: import("mongoose").SchemaDefinitionProperty<string, TravelPost, Document<unknown, {}, TravelPost, {
+    fromGeo?: import("mongoose").SchemaDefinitionProperty<{
+        type: string;
+        coordinates: number[];
+    } | undefined, TravelPost, Document<unknown, {}, TravelPost, {
         id: string;
     }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
         _id: Types.ObjectId;
@@ -84,7 +92,7 @@ export declare const TravelPostSchema: import("mongoose").Schema<TravelPost, imp
     }, "id"> & {
         id: string;
     }> | undefined;
-    area?: import("mongoose").SchemaDefinitionProperty<string | undefined, TravelPost, Document<unknown, {}, TravelPost, {
+    toCountry?: import("mongoose").SchemaDefinitionProperty<string, TravelPost, Document<unknown, {}, TravelPost, {
         id: string;
     }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
         _id: Types.ObjectId;
@@ -93,7 +101,25 @@ export declare const TravelPostSchema: import("mongoose").Schema<TravelPost, imp
     }, "id"> & {
         id: string;
     }> | undefined;
-    geo?: import("mongoose").SchemaDefinitionProperty<{
+    toCity?: import("mongoose").SchemaDefinitionProperty<string, TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    toArea?: import("mongoose").SchemaDefinitionProperty<string | undefined, TravelPost, Document<unknown, {}, TravelPost, {
+        id: string;
+    }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
+        _id: Types.ObjectId;
+    } & {
+        __v: number;
+    }, "id"> & {
+        id: string;
+    }> | undefined;
+    toGeo?: import("mongoose").SchemaDefinitionProperty<{
         type: string;
         coordinates: number[];
     } | undefined, TravelPost, Document<unknown, {}, TravelPost, {
@@ -123,7 +149,7 @@ export declare const TravelPostSchema: import("mongoose").Schema<TravelPost, imp
     }, "id"> & {
         id: string;
     }> | undefined;
-    fromDate?: import("mongoose").SchemaDefinitionProperty<Date, TravelPost, Document<unknown, {}, TravelPost, {
+    travelDate?: import("mongoose").SchemaDefinitionProperty<Date, TravelPost, Document<unknown, {}, TravelPost, {
         id: string;
     }, import("mongoose").DefaultSchemaOptions> & Omit<TravelPost & {
         _id: Types.ObjectId;

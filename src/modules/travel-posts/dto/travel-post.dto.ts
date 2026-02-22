@@ -1,41 +1,65 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { ArrayMinSize, IsArray, IsDateString, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+    ArrayMinSize,
+    IsArray,
+    IsDateString,
+    IsEnum,
+    IsNotEmpty,
+    IsNumber,
+    IsOptional,
+    IsString,
+} from 'class-validator';
 
 export class CreateTravelPostDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  fromLocation: string;
+  fromCountry: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  toLocation: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  country: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  city: string;
+  fromCity: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  area?: string;
+  fromArea?: string;
 
   @ApiPropertyOptional({ description: 'Longitude' })
   @IsOptional()
   @IsNumber()
-  longitude?: number;
+  fromLongitude?: number;
 
   @ApiPropertyOptional({ description: 'Latitude' })
   @IsOptional()
   @IsNumber()
-  latitude?: number;
+  fromLatitude?: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  toCountry: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  toCity: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  toArea?: string;
+
+  @ApiPropertyOptional({ description: 'Longitude' })
+  @IsOptional()
+  @IsNumber()
+  toLongitude?: number;
+
+  @ApiPropertyOptional({ description: 'Latitude' })
+  @IsOptional()
+  @IsNumber()
+  toLatitude?: number;
 
   @ApiProperty({ enum: ['car', 'bus', 'train', 'flight'] })
   @IsEnum(['car', 'bus', 'train', 'flight'])
@@ -50,7 +74,7 @@ export class CreateTravelPostDto {
   @ApiProperty({ description: 'ISO string of the date of travel' })
   @IsDateString()
   @IsNotEmpty()
-  fromDate: string;
+  travelDate: string;
 
   @ApiPropertyOptional({ description: 'Time in HH:mm format' })
   @IsOptional()

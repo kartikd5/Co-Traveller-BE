@@ -11,33 +11,47 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var TravelPostsService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TravelPostsService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const travel_post_schema_1 = require("./schemas/travel-post.schema");
-let TravelPostsService = class TravelPostsService {
+let TravelPostsService = TravelPostsService_1 = class TravelPostsService {
     travelPostModel;
+    logger = new common_1.Logger(TravelPostsService_1.name);
     constructor(travelPostModel) {
         this.travelPostModel = travelPostModel;
     }
     async create(userId, createDto) {
-        const { longitude, latitude, ...rest } = createDto;
-        const postData = { ...rest, userId: new mongoose_2.Types.ObjectId(userId) };
-        if (longitude !== undefined && latitude !== undefined) {
-            postData.geo = {
-                type: 'Point',
-                coordinates: [longitude, latitude]
-            };
+        try {
+            const { fromLongitude, fromLatitude, toLongitude, toLatitude, ...rest } = createDto;
+            const postData = { ...rest, userId: new mongoose_2.Types.ObjectId(userId) };
+            if (fromLongitude !== undefined && fromLatitude !== undefined) {
+                postData.fromGeo = {
+                    type: 'Point',
+                    coordinates: [fromLongitude, fromLatitude],
+                };
+            }
+            if (toLongitude !== undefined && toLatitude !== undefined) {
+                postData.toGeo = {
+                    type: 'Point',
+                    coordinates: [toLongitude, toLatitude],
+                };
+            }
+            return await this.travelPostModel.create(postData);
         }
-        return this.travelPostModel.create(postData);
+        catch (error) {
+            this.logger.error(`Error creating travel post for user: ${userId}. Details: ${error.message}`, error.stack);
+            throw error;
+        }
     }
     async findAllPublic(query) {
         return this.travelPostModel
             .find({
             ...query,
-            expiresAt: { $gt: new Date() }
+            expiresAt: { $gt: new Date() },
         })
             .populate('userId', 'name profileImage age gender whatsappEnabled')
             .lean()
@@ -71,7 +85,7 @@ let TravelPostsService = class TravelPostsService {
     }
 };
 exports.TravelPostsService = TravelPostsService;
-exports.TravelPostsService = TravelPostsService = __decorate([
+exports.TravelPostsService = TravelPostsService = TravelPostsService_1 = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(travel_post_schema_1.TravelPost.name)),
     __metadata("design:paramtypes", [mongoose_2.Model])

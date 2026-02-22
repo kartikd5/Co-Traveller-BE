@@ -1,14 +1,17 @@
 export declare class CreateTravelPostDto {
-    fromLocation: string;
-    toLocation: string;
-    country: string;
-    city: string;
-    area?: string;
-    longitude?: number;
-    latitude?: number;
+    fromCountry: string;
+    fromCity: string;
+    fromArea?: string;
+    fromLongitude?: number;
+    fromLatitude?: number;
+    toCountry: string;
+    toCity: string;
+    toArea?: string;
+    toLongitude?: number;
+    toLatitude?: number;
     transportPreference: string;
     preferredGender?: string;
-    fromDate: string;
+    travelDate: string;
     timeRangeStart?: string;
     timeRangeEnd?: string;
     interests: string[];

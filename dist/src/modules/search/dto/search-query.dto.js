@@ -14,9 +14,12 @@ const swagger_1 = require("@nestjs/swagger");
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 class SearchQueryDto {
-    country;
-    city;
-    area;
+    fromCountry;
+    fromCity;
+    fromArea;
+    toCountry;
+    toCity;
+    toArea;
     date;
     transportPreference;
     gender;
@@ -30,19 +33,37 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], SearchQueryDto.prototype, "country", void 0);
+], SearchQueryDto.prototype, "fromCountry", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], SearchQueryDto.prototype, "city", void 0);
+], SearchQueryDto.prototype, "fromCity", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], SearchQueryDto.prototype, "area", void 0);
+], SearchQueryDto.prototype, "fromArea", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], SearchQueryDto.prototype, "toCountry", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], SearchQueryDto.prototype, "toCity", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], SearchQueryDto.prototype, "toArea", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({ description: 'Filter by specific date' }),
     (0, class_validator_1.IsOptional)(),
