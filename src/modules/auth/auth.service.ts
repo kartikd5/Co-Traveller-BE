@@ -1,7 +1,7 @@
 import {
-    BadRequestException,
-    Injectable,
-    UnauthorizedException,
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
@@ -21,26 +21,34 @@ export class AuthService {
   async verifyOtpAndLogin(verifyOtpDto: VerifyOtpDto) {
     const { type, identifier, otp, name } = verifyOtpDto;
 
-    // 1. Verify OTP
-    await this.otpService.verifyOtp(type, identifier, otp);
+    try {
+      // 1. Verify OTP
+      await this.otpService.verifyOtp(type, identifier, otp);
 
-    // 2. Find or Create User
-    let user = await this.usersService.findByIdentifier(type, identifier);
+      // 2. Find or Create User
+      let user = await this.usersService.findByIdentifier(type, identifier);
 
-    if (!user) {
-      if (!name) {
-        throw new BadRequestException(
-          'Name is required for new user registration',
-        );
+      if (!user) {
+        if (!name) {
+          throw new BadRequestException(
+            'Name is required for new user registration',
+          );
+        }
+        user = await this.usersService.createUser({ type, identifier, name });
       }
-      user = await this.usersService.createUser({ type, identifier, name });
+
+      // Update last activity
+      await this.usersService.updateLastActive(user._id.toString());
+
+      // 3. Generate Tokens
+      return this.generateTokens(user);
+    } catch (error) {
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
+      console.error('[verifyOtpAndLogin Error]', error);
+      throw error;
     }
-
-    // Update last activity
-    await this.usersService.updateLastActive(user._id.toString());
-
-    // 3. Generate Tokens
-    return this.generateTokens(user);
   }
 
   async refreshTokens(refreshToken: string) {

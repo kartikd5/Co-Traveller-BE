@@ -15,7 +15,6 @@ let Otp = class Otp {
     type;
     identifier;
     otpHash;
-    expiresAt;
 };
 exports.Otp = Otp;
 __decorate([
@@ -30,16 +29,9 @@ __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Otp.prototype, "otpHash", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({
-        required: true,
-        type: Date,
-        expires: '5m',
-    }),
-    __metadata("design:type", Date)
-], Otp.prototype, "expiresAt", void 0);
 exports.Otp = Otp = __decorate([
     (0, mongoose_1.Schema)({ timestamps: true })
 ], Otp);
 exports.OtpSchema = mongoose_1.SchemaFactory.createForClass(Otp);
+exports.OtpSchema.index({ createdAt: 1 }, { expireAfterSeconds: 300 });
 //# sourceMappingURL=otp.schema.js.map

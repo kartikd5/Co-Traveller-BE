@@ -64,7 +64,6 @@ __decorate([
         type: {
             type: String,
             enum: ['Point'],
-            default: 'Point',
         },
         coordinates: {
             type: [Number],

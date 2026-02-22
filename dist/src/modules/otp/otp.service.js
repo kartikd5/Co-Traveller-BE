@@ -51,20 +51,52 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const bcrypt = __importStar(require("bcrypt"));
 const mongoose_2 = require("mongoose");
+const nodemailer = __importStar(require("nodemailer"));
 const otp_schema_1 = require("./schemas/otp.schema");
 let OtpService = OtpService_1 = class OtpService {
     otpModel;
     logger = new common_1.Logger(OtpService_1.name);
+    transporter;
     constructor(otpModel) {
         this.otpModel = otpModel;
+        this.transporter = nodemailer.createTransport({
+            host: process.env.EMAIL_HOST,
+            port: parseInt(process.env.EMAIL_PORT || '587'),
+            secure: false,
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+        });
     }
     async sendOtp(sendOtpDto) {
         const { type, identifier } = sendOtpDto;
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
         const saltRounds = 10;
         const otpHash = await bcrypt.hash(otp, saltRounds);
-        await this.otpModel.findOneAndUpdate({ type, identifier }, { type, identifier, otpHash, expiresAt: new Date(Date.now() + 5 * 60 * 1000) }, { upsert: true, new: true });
-        this.logger.debug(`[Simulation] OTP for ${identifier}: ${otp}`);
+        await this.otpModel.findOneAndUpdate({ type, identifier }, {
+            type,
+            identifier,
+            otpHash,
+        }, { upsert: true, new: true });
+        if (type === 'email') {
+            try {
+                await this.transporter.sendMail({
+                    from: `"Co-Traveller" <${process.env.EMAIL_USER}>`,
+                    to: identifier,
+                    subject: 'Your Co-Traveller Verification OTP',
+                    text: `Your OTP is: ${otp}`,
+                    html: `<p>Your Co-Traveller verification OTP is: <b>${otp}</b></p><p>This OTP will expire in 5 minutes.</p>`,
+                });
+                this.logger.debug(`[Email Sent] OTP to ${identifier}`);
+            }
+            catch (error) {
+                this.logger.error(`Error sending email to ${identifier}:`, error);
+            }
+        }
+        else {
+            this.logger.debug(`[SMS Simulation] OTP for ${identifier}: ${otp}`);
+        }
         return { message: 'OTP sent successfully' };
     }
     async verifyOtp(type, identifier, otp) {

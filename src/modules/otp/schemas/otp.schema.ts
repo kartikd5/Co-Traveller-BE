@@ -13,13 +13,7 @@ export class Otp {
 
   @Prop({ required: true })
   otpHash: string;
-
-  @Prop({
-    required: true,
-    type: Date,
-    expires: '5m', // TTL index at 5 minutes
-  })
-  expiresAt: Date;
 }
 
 export const OtpSchema = SchemaFactory.createForClass(Otp);
+OtpSchema.index({ createdAt: 1 }, { expireAfterSeconds: 300 }); // 5 minutes TTL

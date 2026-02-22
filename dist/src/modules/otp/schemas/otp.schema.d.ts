@@ -4,7 +4,6 @@ export declare class Otp {
     type: string;
     identifier: string;
     otpHash: string;
-    expiresAt: Date;
 }
 export declare const OtpSchema: import("mongoose").Schema<Otp, import("mongoose").Model<Otp, any, any, any, (Document<unknown, any, Otp, any, import("mongoose").DefaultSchemaOptions> & Otp & {
     _id: import("mongoose").Types.ObjectId;
@@ -44,15 +43,6 @@ export declare const OtpSchema: import("mongoose").Schema<Otp, import("mongoose"
         id: string;
     }> | undefined;
     otpHash?: import("mongoose").SchemaDefinitionProperty<string, Otp, Document<unknown, {}, Otp, {
-        id: string;
-    }, import("mongoose").DefaultSchemaOptions> & Omit<Otp & {
-        _id: import("mongoose").Types.ObjectId;
-    } & {
-        __v: number;
-    }, "id"> & {
-        id: string;
-    }> | undefined;
-    expiresAt?: import("mongoose").SchemaDefinitionProperty<Date, Otp, Document<unknown, {}, Otp, {
         id: string;
     }, import("mongoose").DefaultSchemaOptions> & Omit<Otp & {
         _id: import("mongoose").Types.ObjectId;

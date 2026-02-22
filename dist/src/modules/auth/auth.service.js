@@ -28,16 +28,25 @@ let AuthService = class AuthService {
     }
     async verifyOtpAndLogin(verifyOtpDto) {
         const { type, identifier, otp, name } = verifyOtpDto;
-        await this.otpService.verifyOtp(type, identifier, otp);
-        let user = await this.usersService.findByIdentifier(type, identifier);
-        if (!user) {
-            if (!name) {
-                throw new common_1.BadRequestException('Name is required for new user registration');
+        try {
+            await this.otpService.verifyOtp(type, identifier, otp);
+            let user = await this.usersService.findByIdentifier(type, identifier);
+            if (!user) {
+                if (!name) {
+                    throw new common_1.BadRequestException('Name is required for new user registration');
+                }
+                user = await this.usersService.createUser({ type, identifier, name });
             }
-            user = await this.usersService.createUser({ type, identifier, name });
+            await this.usersService.updateLastActive(user._id.toString());
+            return this.generateTokens(user);
         }
-        await this.usersService.updateLastActive(user._id.toString());
-        return this.generateTokens(user);
+        catch (error) {
+            if (error instanceof common_1.BadRequestException) {
+                throw error;
+            }
+            console.error('[verifyOtpAndLogin Error]', error);
+            throw error;
+        }
     }
     async refreshTokens(refreshToken) {
         try {
